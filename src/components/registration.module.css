@@ -1,0 +1,141 @@
+*{
+    padding: 0;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+.body{
+    width: 100vw;
+    height: 100vh;
+    background-image: linear-gradient(45deg, rgba(0, 0, 0, 0.7) 50%,rgba(0, 0, 0, 0.6) 50%),url('https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.h1{
+    color: rgb(255, 255, 255);
+    margin: 7%;
+}
+.div, .p{
+    margin: 6%;
+    border-radius: 6%;
+}
+.label{
+    display: block;
+    padding: 3%;
+    text-wrap: nowrap;
+    text-align: end;
+}
+.table{
+    text-align: center;
+}
+.td{
+    text-align: center;
+    padding: 5px;
+}
+.formDiv{
+    text-align: center;
+    max-width: 510px;
+    max-height: 500px;
+    border: 1px solid white;
+    background-color: wheat;
+}
+.input:valid, .textarea:valid{
+    width: 300px;
+    height: 30px;
+    padding: 5px;
+    outline: none;
+    border: 1px solid blue;
+    border-radius: 5px;
+}
+.input:invalid, .textarea:invalid{
+    width: 300px;
+    height: 30px;
+    padding: 5px;
+    outline: none;
+    border: 2px solid red;
+    border-radius: 5px;
+}
+
+.link{
+    width: 100%;
+    margin: 0%;
+    margin:0 0 1% 1%;
+    padding:0 0 2% 0%;
+    text-align: end;
+    color: blue;
+    text-decoration: underline;
+}
+.element{
+    text-align: center;
+    padding-top: 5%;
+    font-size: medium;
+}
+.button{
+    width: 120px;
+    border: none;
+    padding: 5px;
+    font-size: medium;
+}
+.button:hover{
+    color: white;
+    background-color: blue;
+    transition: .5s .1s ease-in-out;
+}
+.foot{
+    margin: 0;
+    position: relative;
+    right: 3%;
+    width: 100%;
+}
+@media screen and (max-width: 150px) and (min-width: 0px) {
+    .formDiv{
+        margin: 2%;
+        overflow-x: auto;
+        max-width: max-content;
+        min-width: max-content;
+        min-height: max-content;
+        max-height: max-content;
+        background-color: white;
+        position: relative;
+        top: 30%;
+        transform: translate(-50%, -50%);
+    }
+}
+@media screen and (max-width: 600px) and (min-width: 150px) {
+    .h1{
+        color: rgb(255, 255, 255);
+        padding: 5vh;
+    }
+    .label{
+        font-size: large;
+    }
+    .input{
+        text-align: justify;
+        font-size: larger;
+        min-width: 80%;
+        background-color:  white;
+        border: none;
+        border-bottom: 1px solid black;
+        outline: none;
+        padding: 5px;
+        border-radius: 5%;
+    }
+    .element{
+        text-align: center;
+        padding-top: 13%;
+        font-size: medium;
+    }
+    .formDiv{
+        margin: none;
+        text-align: center;
+        min-width: 300px;
+        max-width: 400px;
+        background-color: white;
+        padding: 0.5%;
+        position: absolute;
+        left: 50%;
+        top: 40%;
+        transform: translate(-20%, -50%);
+        border-radius: 5%;
+    }
+}
