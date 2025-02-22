@@ -1,9 +1,9 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../DB/api.ts";
 import {AccountCircleTwoTone} from '@mui/icons-material';
 import { login } from "../store/createSlice.ts";
-import reducer from "../store/createSlice.ts";
+import { UnknownAction } from "@reduxjs/toolkit";
+import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
 
 
 export function Login() {
@@ -15,18 +15,13 @@ export function Login() {
 		new Date().getHours() + 1,
 		new Date().getMinutes()
 	);
-	const isLogged = useSelector((state: any) => state.authLogin.isLogged);
+	const auth = useSelector((state: any) => state.authLogin);
 	const dispatch = useDispatch();
 	const handleClick = async (eve: any) => {
 		eve.preventDefault();
 		const id = eve.target.username.value;
 		const password = eve.target.password.value;
-		dispatch(login({id, password}))
-		if(isLogged){	
-			window.location.assign('../');
-			
-		}
-		console.log(isLogged)
+		dispatch(login({ id, password }) as unknown as UnknownAction)
 		
 	}
 
@@ -34,8 +29,11 @@ export function Login() {
 	const navigateRegistration = () => window.location.href = ('registration')
 
 
+	auth.apiStatus === 'fulfilled' && window.location.assign('./');
+	
 	return (
 		<div className={`relative`}>
+			{auth.apiStatus === 'pending' && <CircularProgress />}
 			<div className={`absolute`} style={{ minWidth: '300px', padding: '20px', border: '1px solid #ccc', borderRadius: '8px', top: '30%' }}>
 			
 			<h2 className={`pt-1 pb-3`}>TaskTrack Login <AccountCircleTwoTone style={{width: '60px', height: '60px'}} /></h2>

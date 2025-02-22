@@ -1,7 +1,8 @@
-import { applyMiddleware, configureStore } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import reducer from './createSlice.ts'
 
 
 export const store = configureStore({
-  reducer
+  reducer,
+  middleware: (get) => get({thunk: true}).concat()
 })

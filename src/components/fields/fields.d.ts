@@ -10,4 +10,9 @@ export type TSection=  {
   title: string;
   isClicked: boolean
 }
+interface ITaskListComp {
+  children: [];
+  title: string;
+  isClicked: boolean
+}
 export declare function DropdownFrame(props:TClicked) : ReactElement;

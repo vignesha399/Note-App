@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux"
-import { setNumberIncrement } from "../../store/createSlice.ts";
+import React from "react";
+import { useDispatch } from "react-redux"
+import { addRow } from "../../store/createSlice.ts";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import {
@@ -13,180 +13,58 @@ import {
   Typography,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import { commonHook, updatedRows } from "./create.tsx";
 
-
-export let AddItem = function () {
-  const store = useSelector((state: any) => state.authLogin);
-  const dispatch = useDispatch();
-  let items: any[]=[]
-  addSerialNum();
-  let number: number = store.number;
-  // useEffect(() => {
-  //   // number = store.number
-  //   dispatch(setNumberIncrement());
-    
-  // },[])
-  
-  const item = () => {
-    return (
-      <>
-        <tr style={{ "backgroundColor": "rgb(203, 247, 237)" }}>
-          <td id={`sno${number}`} className="class" contentEditable>
-          </td>
-          <td
-            id={`itemname${number}`}
-            className={"class"}
-            contentEditable={true}
-          ></td>
-          <td id={`quantity${number}`}>
-            <input
-              style={{
-                outline: "none",
-                border: "none",
-                width: "100%",
-                height: "100%",
-                textAlign: "center",
-              }}
-              type="number"
-              min={0}
-              width={"fit-content"}
-              onChange={(e) => calculate("quantity" + number)}
-            />
-          </td>
-          <td id={`price${number}`}>
-            <input
-              style={{
-                outline: "none",
-                border: "none",
-                width: "100%",
-                height: "100%",
-                textAlign: "center",
-              }}
-              type="number"
-              min={0}
-              width={"fit-content"}
-              onChange={() => calculate("price" + number)}
-            />
-          </td>
-          <td
-            id={`total${number}`}
-            className={"class"}
-            // contentEditable={totalEditable}
-          ></td>
-          <td id={`delt${number}`} onClick={() => removeElement("delt" + number)}>
-            <p
-              style={{
-                "backgroundColor": "red",
-                "textAlign": "center",
-                "borderRadius": "50px",
-                height: "50%",
-                padding: "5px",
-                cursor: "default",
-                maxHeight: "30px",
-                maxWidth: "30px",
-              }}
-            >
-              X
-            </p>
-          </td>
-        </tr>
-      </>
-    );
-  }
-
-  // let number: number;
-  // for (number = 0; number <= store.number; number++) {
-  //   console.log(number, 'loop', store.number)
-  //   items.push(item(number));
-  // }
-
-  // function addCol(){
-  //   (function check(){
-  //     let cname: string[] =[];
-  //     let output: any = document.cookie;
-  //     console.log(cname = output.split(';'));
-  
-  //   })();
-  //     let td1 = document.createElement('td');
-  //     td1.setAttribute('id',`sno${number}`)
-  //     td1.setAttribute('class',`class sno`)
-  //     let td2 = document.createElement('td');
-  //     td2.setAttribute('id',`itemname${number}`)
-  //     td2.setAttribute('class',`class`)
-  //     td2.setAttribute('contenteditable','')
-  //     let td3 = document.createElement('td');
-  //     td3.setAttribute('id',`quantity${number}`)
-  //     td3.setAttribute('class',`class`)
-  //     td3.setAttribute('contenteditable','')
-  //     td3.setAttribute('onkeydown',`calculate(quantity${number})`)
-  //     let td4 = document.createElement('td');
-  //     td4.setAttribute('id',`price${number}`)
-  //     td4.setAttribute('class',`class`)
-  //     td4.setAttribute('contenteditable','')
-  //     // td4.setAttribute('onclick',`calculate(price${number})`)
-  //     td4.setAttribute('onkeydown',`calculate(price${number})`)
-  //     let td5 = document.createElement('td')
-  //     td5.setAttribute('id',`total${number}`)
-  //     td5.setAttribute('class',`class`)
-  //     let td6 = document.createElement('td')
-  //     td6.setAttribute('id',`delt${number}`)
-  //     td6.setAttribute('class',`class`)
-  //     td6.setAttribute('onclick',`removeElement(delt${number})`)
-  //     td6.setAttribute('style',"background-color:red;text-align: center; border-radius:50px;hight:50%;")
-  //     td6.innerText = 'x';
-  //     let tr = document.createElement('tr')
-  //     tr.setAttribute('id',`tr${number}`)
-  //     tr.setAttribute('class',`class`)
-  //     tableGroceList.append(tr);tr.append(td1);tr.append(td2);tr.append(td3);tr.append(td4);tr.append(td5);tr.append(td6);
-  //     addSerialNum();
-  // }  
-  items.push(item());
-  console.log(item().type)
-  // items.push(addCol());
-  return items;
-};
 
 // remove rows
-export function removeElement(delt: string) {
+export function removeElement(delt: string, cb?: any) {
+  document.getElementById('tableGroceList')!.addEventListener('load', (ev: Event) => {
+  })
   let reg = /\d+/g;
   let id = reg.exec(delt!)![0];
-  console.log(id, reg)
   if (
     document.getElementById("quantity" + id)!.parentElement?.previousElementSibling?.firstElementChild?.nextElementSibling?.nextElementSibling
   ) {
-    let orgID = document
-      .getElementById("quantity" + id)!
-      .parentElement!.previousElementSibling!.firstElementChild!.nextElementSibling!.nextElementSibling!.getAttribute(
-        "id"
-      );
-    calculate(`quantity${reg.exec(orgID!)![0]}`);
+    // let orgID = document
+    //   .getElementById("quantity" + id)!
+    //   .parentElement?.previousElementSibling?.firstElementChild!.nextElementSibling!.nextElementSibling!.getAttribute(
+    //     "id"
+    //   );
+    calculate(`quantity${id}`);
   } else if (
-    document.getElementById("quantity" + id)!.parentElement!.nextElementSibling!.firstElementChild?.nextElementSibling?.nextElementSibling
+    document.getElementById("quantity" + id)!.parentElement?.nextElementSibling?.firstElementChild?.nextElementSibling?.nextElementSibling
   ) {
     let orgID = document
       .getElementById("quantity" + id)!
-      .parentElement!.nextElementSibling!.firstElementChild!.nextElementSibling!.nextElementSibling!.getAttribute(
+      .parentElement?.nextElementSibling?.firstElementChild?.nextElementSibling?.nextElementSibling?.getAttribute(
         "id"
       );
-    calculate(`quantity${reg.exec(orgID!)![0]}`);
-    console.log('else if condition', reg.exec(orgID!), orgID);
+    calculate(`quantity${id}`);
   } else {
     document.getElementById("toAV")!.textContent = '0';
   }
-  console.log(delt);
-  document.getElementById(delt)!.parentElement!.remove();
+  document.getElementById(delt)?.parentElement?.remove();
+  let elementArray = document.getElementsByTagName('tr');
+  // update removed rows in allrow
+  for (let i = 1; i < elementArray.length; i++) {
+    let element: HTMLTableRowElement[];
+    element = [];
+    element.push(elementArray[i]);
+
+    // cb(element);
+  }
+  commonHook(addRow(updatedRows));
   addSerialNum();
 }
 // adding serial number
-function addSerialNum() {
+export function addSerialNum() {
   let arr = document.getElementsByTagName("tr");
   for (let index = 1; index < arr.length; index++) {
     arr[index].firstElementChild!.textContent = index.toString();
   }
 }
 // calculate price
-function calculate(eleId: string) {
-  console.log(eleId)
+export function calculate(eleId: string) {
   let regex = /\d+/g;
   let arr = document.getElementsByTagName("tr");
   let v = regex.exec(eleId)![0];
@@ -198,31 +76,28 @@ function calculate(eleId: string) {
   let eleIdVal2: number;
   let oValue = 0;
   setTimeout(() => {
-    eleIdVal1 = parseInt((document.getElementById(eleId1)?.firstElementChild! as HTMLInputElement).value);
-    eleIdVal2 = parseInt((document.getElementById(eleId2)?.firstElementChild! as HTMLInputElement).value);
-    if (
-      (document.getElementById(eleId1)?.firstElementChild as HTMLInputElement).value == null ||
-      undefined ||
-      NaN
+    eleIdVal1 = parseInt((document.getElementById(eleId1) as HTMLTableCellElement)?.innerText);
+    eleIdVal2 = parseInt((document.getElementById(eleId2) as HTMLTableCellElement)?.innerText);
+    if ((document.getElementById(eleId1)! as HTMLTableCellElement) &&
+      Number.isNaN(parseInt((document.getElementById(eleId1)! as HTMLTableCellElement).innerText))
     ) {
-      eleIdVal1 = 1;
+      eleIdVal1 = 0;
     }
     if (
-      (document.getElementById(eleId2)?.firstElementChild! as HTMLInputElement).value == null ||
-      undefined ||
-      NaN
+      (document.getElementById(eleId2)! as HTMLTableCellElement) &&
+      Number.isNaN(parseInt((document.getElementById(eleId2)! as HTMLTableCellElement).innerText))
     ) {
-      eleIdVal2 = 1;
+      eleIdVal2 = 0;
     }
     v2 = eleIdVal1 * eleIdVal2;
     if (
-      (document.getElementById(eleId)?.firstElementChild! as HTMLInputElement).value == null ||
-      undefined ||
-      NaN
+      document.getElementById(eleId) &&
+      (document.getElementById(eleId)! as HTMLTableCellElement) &&
+      Number.isNaN(parseInt((document.getElementById(eleId)! as HTMLTableCellElement).innerText))
     ) {
-      document.getElementById(total)!.textContent = '0';
-    } else {
-      document.getElementById(total)!.textContent = v2.toString();
+      (document.getElementById(total) as HTMLTableCellElement).textContent = '0';
+    } else if (document.getElementById(eleId)) {
+      (document.getElementById(total) as HTMLTableCellElement).textContent = v2.toString();
     }
   }, 0.4);
   setTimeout(() => {
@@ -246,6 +121,7 @@ function calculate(eleId: string) {
       }
     }
   }, 0.5);
+  addSerialNum()
 }
 
 export function PrintPage(props: { open: { openPop: any; setOpenPop: any; typoGText: any; buttonName: any; }; }) {
@@ -284,7 +160,7 @@ export function PrintPage(props: { open: { openPop: any; setOpenPop: any; typoGT
         unit: "px",
         format: [
           htmlElement!.scrollHeight + 10,
-          htmlElement!.offsetWidth > 999 ? htmlElement!.offsetWidth + 10 : 999,
+          htmlElement!.offsetWidth,
         ],
       });
       pdf.addImage(canvas.toDataURL("image/png"), "PNG", 50, 50, 50, 50);

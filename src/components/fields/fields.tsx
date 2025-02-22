@@ -43,7 +43,6 @@ type TReactArray = {
 export function CollapseFrame(props: any) {
   
   const array: TReactArray[] = [{'home':<Home />}];
-  const clickedTabName = useSelector((state: any) => state.common.contentTabName);
   const dispatch = useDispatch();
   const {child} = props;
   const [parentName, setParentName] = useState('');
@@ -55,11 +54,11 @@ export function CollapseFrame(props: any) {
     else setParentName('')
   }
   return (<>
-    {child.map((element: any)=>{
+    {child.map((element: any, i: number)=>{
       return (<>
         {(element.title)
-          ?<h2 key={element.title} onClick={(e)=> renderChild(e)} className={`cursor-pointer p-2`}>{element.title}{element.children? <ArrowDropDown /> : ''}</h2>
-          :<div className={`p-2`}>{element.list.map((e:any) => <h2 key={e} className={`p-2 rounded hover:bg-blue-100`}>{e}</h2>)}</div>
+          ?<h2 key={element.title} className={`cursor-pointer p-2`}><span onClick={(e) => renderChild(e)} key={element.title}>{element.title}</span>{element.children? <ArrowDropDown key={i} /> : ''}</h2> 
+          :<div className={`p-2`} key={i}>{element.list.map((e:any) => <h2 key={e} className={`p-2 rounded hover:bg-blue-100`}>{e}</h2>)}</div>
         }
 
         {element.children && parentName === element.title && <div className="indent-2" key={element.title}><CollapseFrame child={element.children} key={element}/></div>}

@@ -1,4 +1,4 @@
-import { get, post } from "./index.ts";
+import { deleteMethod, get, post } from "./index.ts";
 
 
 export const loginUser = async (email: string, password: string): Promise<any> => {
@@ -14,10 +14,21 @@ export const forgotPassword = async (email: string, password: string) => {
   return await post('forgotPassword',{email, password});
 };
 export const base = async () => {
-
-  return await get('base/base');
+  return await get('base');
 };
 export const timeline = async () => {
 
   return await get('base/base');
+};
+export const getTasks = async () => {
+
+  return await get('get-tasks');
+};
+export const createTask = async (body: {[key:string ]: string} | {[key:string ]: string}[]) => {
+
+  return await post('createTask', body);
+};
+export const deleteTasks = async (id: string) => {
+
+  return await deleteMethod('delete-task', {}, {id});
 };

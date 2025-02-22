@@ -26,11 +26,6 @@ export function Timeline() {
     dispatch(getTimeline());
   }
 
-  if (timelineData.status !== 'pending') {
-    console.log(timelineData)
-
-
-  }
   useEffect(() => {
     dispatcher()
 

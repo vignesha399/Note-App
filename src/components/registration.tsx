@@ -13,7 +13,6 @@ export function Registration() {
         const id = eve.target.username.value;
         const password = eve.target.password.value;
         const res = await registration(name, id, password, dob, bio);
-        console.log(res);
     }
     const navigateLogin = () => window.location.href=('login')
     const navigateRegistration = () => window.location.href=('registration')
@@ -74,7 +73,6 @@ export function ForgotPassword() {
         const id = eve.target.username.value;
         const password = eve.target.password.value;
         const res = await forgotPassword(id, password);
-        console.log(res);
     }
     return (
         <body className="body">

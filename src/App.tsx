@@ -4,27 +4,28 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Login } from './components/login.tsx';
 import { Home } from './components/home.tsx';
 import { ForgotPassword, Registration } from './components/registration.tsx';
-import { PageDevelopment } from './temp/home.tsx';
 import { useDispatch } from 'react-redux';
-import { updateLogged } from './store/createSlice.ts';
+import jwb from 'jsonwebtoken';
 
 function App() {
   const dispatch = useDispatch();
 
   useEffect(()=>{
+      // console.log(document.cookie.split('=')[0] === 'session_token' && document.cookie.split('=')[1] !== '', jwb.decode(document.cookie.split('=')[1]))
       
-  if  (document.cookie.split('=')[0] === 'session_token' && document.cookie.split('=')[1] !== '') {
-    dispatch(updateLogged({logged: true}));
-    if(window.location.href.includes('login') || window.location.href.includes('registration')){
-      window.location.assign('../')
-    }
-  } else {
-    dispatch(updateLogged({logged: false}));
-  }
+  // if  (document.cookie.split('=')[0] === 'session_token' && document.cookie.split('=')[1] !== '') {
+  //   dispatch(updateLogged({logged: true}));
+    // if(window.location.href.includes('login') || window.location.href.includes('registration')){
+    //   window.location.assign('../')
+    // }
+    console.log('else working')
+  // } else {
+  //   dispatch(updateLogged({logged: false}));
+  // }
   }, [])
   return (
     <>
-      <Router>
+      <Router basename='Note-App'>
         <Routes>
           <Route path='/' Component={Home} />
 
